@@ -1,41 +1,114 @@
 const DEEPSEEK_V3 = "http://localhost:5000/deepseek/v3";
 const OPEN_ROUTER = "http://localhost:5000/openrouter/deepseek/v3";
-
 const SERVER = OPEN_ROUTER
+const messages = [];
 
-document.getElementById("send-button").addEventListener("click", sendMessage);
-document.getElementById("user-input").addEventListener("keypress", function(event) {
-    if (event.key === "Enter") sendMessage();
+const chatWindow = document.querySelector('.chat-window')
+const sendBtn = document.querySelector('.send-btn')
+const chatContainer = document.querySelector(".chat-container");
+
+// on submit, run sendMessage()
+document.querySelector(".send-btn").addEventListener("click", ()=>{
+    console.log('sending message');
+    sendMessage();
 });
 
-async function sendMessage() {
-    const userInput = document.getElementById("user-input");
-    const chatBox = document.getElementById("chat-box");
-    const message = userInput.value.trim();
+// on Enter, run sendMessage()
+document.querySelector(".user-input").addEventListener("keydown", function(e) {
+    if (e.keyCode == 13 && !e.shiftKey && sendBtn.disabled==false) {
+        e.preventDefault();
+        sendMessage();
+    }
+});
 
+document.querySelector(".chat-btn").addEventListener("click",()=>{
+    chatWindow.classList.remove('hidden');
+})
+document.querySelector(".close-btn").addEventListener('click',()=>{
+    chatWindow.classList.add('hidden')
+})
+
+async function sendMessage() {
+
+    // Grab user input
+    const userInput = document.querySelector(".user-input");
+    const message = userInput.value.trim(); // take stored value as message to be sent
+    
+    // if the message is empty (i.e. nohing was typed, immediately exit function)
     if (!message) return;
 
-    chatBox.innerHTML += `<div><strong>You:</strong> ${message}</div>`;
+    // Prevent use from sending anymore messages while the current message is being processed
+    disable(true)
+
+    // Create user chat bubble containing the message sent
+    chatContainer.innerHTML += `<div class="user"><p>${message}</p></div>`;
+    chatContainer.innerHTML += `<div class='chat-typing'><div class='model'><img src="assets/sky-icon.png" alt="icon"><div class="loader model"></div></div><div>`;
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+
+    // Reset input box
     userInput.value = "";
     console.log(JSON.stringify({ message }))
+
+    // Keep history of messages for logging purposes
+    messages.push({role: "user", content: message})
+
     try {
+
+        // async POST request using fetch, then save response to var 'response'
         const response = await fetch(SERVER, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ message })
         });
         console.log('sent POST request')
+
+        // wait for response, then set to 'data'
         const data = await response.json();
 
+        // handle internal error within data
         if(data.error){
-            chatBox.innerHTML += `<div><strong>DeepSeek V3:</strong> ${data.error}</div>`;
-            chatBox.scrollTop = chatBox.scrollHeight;
+            chatContainer.innerHTML += `<div class="model"><img src="assets/sky-icon.png" alt="icon"><p>${data.error}</p></div>`;
+            chatContainer.scrollTop = chatContainer.scrollHeight;
         }
+        // handle API overload
+        else if(data.response.trim()==""){
+            chatContainer.innerHTML += `<div class="error"><p>ERROR: API overloaded, please try again.</p></div>`;
+        }
+
+        // Clean data
         else{
-            chatBox.innerHTML += `<div><strong>DeepSeek V3:</strong> ${data.response}</div>`;
-            chatBox.scrollTop = chatBox.scrollHeight;
+            // Create AI chat bubble containing the response
+            chatContainer.innerHTML += `<div class="model"><img src="assets/sky-icon.png" alt="icon"><p>${data.response}</p></div>`;
+            chatContainer.scrollTop = chatContainer.scrollHeight;
         }
-    } catch (error) {
-        chatBox.innerHTML += `<div><strong>DeepSeek V3:</strong> Error: Unable to reach server</div>`;
+
+        // push AI response
+        messages.push({role: "system", content: data.response})
+    } 
+    // if error
+    catch (error) {
+        chatContainer.innerHTML += `<div class="error"><p>ERROR: Connection failed.</p></div>`;
+    }
+    // Remove loader
+    document.querySelector('.chat-container .chat-typing').remove()
+
+    //re-enable form submit
+    disable(false)
+}
+
+function disable(toggle){
+    //disable submit
+    if(toggle){
+        sendBtn.disabled = true
+        document.querySelector('.send-btn i').classList.remove('bxs-send')
+        document.querySelector('.send-btn i').classList.add('bx-loader-alt')
+        document.querySelector('.send-btn i').classList.add('bx-spin')
+    }
+    //enable submit
+    else{
+        sendBtn.disabled = false
+        document.querySelector('.send-btn i').classList.remove('bx-loader-alt')
+        document.querySelector('.send-btn i').classList.remove('bx-spin')
+        document.querySelector('.send-btn i').classList.add('bxs-send')
     }
 }
