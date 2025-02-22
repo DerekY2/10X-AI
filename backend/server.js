@@ -13,9 +13,12 @@ const PORT = 5000;
 
 app.use(cors());
 app.use(bodyParser.json());
+
+// Set up routes
 app.use("/openai", openai)
 app.use("/deepseek", deepseek)
 app.use("/openrouter", openrouter)
+
 // Load spreadsheet data
 let faqData = [];
 

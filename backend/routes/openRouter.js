@@ -21,24 +21,6 @@ openrouter
       console.log("started chat attempt with key -", process.env.OPEN_ROUTER_1)
       console.log(`request body: ${prompt}`)
 
-      // const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      //   method: "POST",
-      //   headers: {
-      //     "Authorization": `Bearer ${process.env.OPEN_ROUTER_1}`,
-      //     "Content-Type": "application/json"
-      //   },
-      //   body: JSON.stringify({
-      //     "model": "deepseek/deepseek-chat:free",
-      //     "messages": [
-      //       {
-      //         "role": "user",
-      //         "content": "What is the meaning of life?"
-      //       }
-      //     ],
-      //     "stream": true
-      //   })
-      // });
-
       const response = await openai.chat.completions.create({
         messages: [
           { role: "system", content: `You are Megatron, 10X Hub's AI assistant. Here is some data about some of us at 10X Hub that may help answer some of the user's questions: ${readFile('./users.json')}. ${info}` },
