@@ -6,22 +6,26 @@ const messages = [];
 const chatWindow = document.querySelector('.chat-window')
 const sendBtn = document.querySelector('.send-btn')
 
+// on submit, run sendMessage()
 document.querySelector(".send-btn").addEventListener("click", ()=>{
     console.log('sending message');
     sendMessage();
 });
+
+// on Enter, run sendMessage()
+document.querySelector(".user-input").addEventListener("keydown", function(e) {
+    if (e.keyCode == 13 && !e.shiftKey && sendBtn.disabled==false) {
+        e.preventDefault();
+        sendMessage();
+    }
+});
+
 document.querySelector(".chat-btn").addEventListener("click",()=>{
     chatWindow.classList.remove('hidden');
 })
 document.querySelector(".close-btn").addEventListener('click',()=>{
     chatWindow.classList.add('hidden')
 })
-document.querySelector(".user-input").addEventListener("keydown", function(e) {
-    if (e.keyCode == 13 && !e.shiftKey && sendBtn.disabled==false) {
-        e.preventDefault()
-        sendMessage()
-    }
-});
 
 async function sendMessage(msg = null) {
     const userInput = document.querySelector(".user-input");
