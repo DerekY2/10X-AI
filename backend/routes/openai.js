@@ -14,7 +14,7 @@ app.use(cors())
 GPT
   .route('/4o')
   .post(async (req, res) => {
-    console.log('post received; route: openrouter/deepseek/v3')
+    console.log('post received; route: openai/4o')
     try {
       console.log("started chat attempt with key - ", process.env.OPENAI_1)
       const prompt = req.body.message;
@@ -32,7 +32,7 @@ GPT
       res.json({ response: completion.choices[0].message.content });
     } catch (error) {
       console.log('API error')
-      res.json({ error: `API request failed - ${error}\nroute: deepseek/v3`});
+      res.json({ error: `API request failed - ${error}\nroute: openai/4o`});
     }
   });
 
