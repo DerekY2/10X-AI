@@ -36,35 +36,10 @@ function parseJSON(data){
 }
 
 parseCSV("users.csv");
-parseJSON("users.json");
+console.log(fs.readFileSync("users.json", "utf8"))
 
 app.get('/', (req,res)=>{
   res.send('Hi')
 })
-
-console.log('what the flip is going on')
-
-// API route to handle chatbot requests
-// app.post("/chat", async (req, res) => {
-//   console.log('post received')
-//   try {
-//     console.log("started chat attempt with key - ", process.env.KEY1)
-//     const prompt = req.body.message;
-//     const completion = await openai.chat.completions.create({
-//       messages: [
-//         { role: "system", content: "You are a helpful assistant." },
-//         {role: "user", content: prompt}],
-//       model: "deepseek-chat",
-//       stream: true
-//     });
-
-//     console.log(completion.choices[0].message.content);
-
-//     res.json({ response: completion.choices[0].message.content });
-//   } catch (error) {
-//     console.log('API error')
-//     res.status(500).json({ error: `AI request failed - ${error}`});
-//   }
-// });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
