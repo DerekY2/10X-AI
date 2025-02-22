@@ -4,6 +4,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 const Papa = require("papaparse");
+const openai = require("./routes/openai")
 const deepseek = require("./routes/deepseek")
 const openrouter = require("./routes/openRouter")
 
@@ -12,6 +13,7 @@ const PORT = 5000;
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use("/openai", openai)
 app.use("/deepseek", deepseek)
 app.use("/openrouter", openrouter)
 // Load spreadsheet data

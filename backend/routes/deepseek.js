@@ -25,7 +25,7 @@ deepseek
           { role: "system", content: `You are Megatron, 10X Hub's AI assistant. Here is some data about 10X Hub's employees that may help answer some of the user's questions: ${readFile('./users.json')}. ${info}` },
           {role: "user", content: prompt}],
         model: "deepseek-chat",
-        stream: true
+        // stream: true
       });
 
       console.log(completion.choices[0].message.content);
