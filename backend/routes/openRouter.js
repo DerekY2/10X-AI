@@ -5,6 +5,8 @@ const OpenAI = require("openai");
 const fs = require("fs");
 const app = express()
 const info = require("../info")
+const {marked} = require('marked');
+const {logData} = require('../logger')
 const openai = new OpenAI({
   baseURL: "https://openrouter.ai/api/v1", // OpenRouter API URL
   apiKey: process.env.OPEN_ROUTER_1        // Private API key from .env
@@ -18,6 +20,9 @@ openrouter
 
     // Set request message as prompt
     const prompt = req.body.message;
+    const dataset = readFile('./data.csv');
+
+    console.log(`user:\n${prompt}`)
 
     try {
 
@@ -26,27 +31,38 @@ openrouter
 
         // System = model behavior; user = user's prompt; -- this is where the magic happens
         messages: [
-          {role: "system", content: `You are Megatron, 10X Hub's AI assistant. Here is some data about some of us at 10X Hub that may help answer some of the user's questions: ${readFile('./users.json')}. ${info}` },
+          {role: "system", content: `You are Bingus, 10X Hub's AI assistant. Example FAQ's for reference: ${info} ; You must follow the tone instructions. Here is a supplemental list of other organizations and their programs in case the user asks about programs and activities: ${dataset}. You will only provide program/activity information for STEM-related requests, in alignment with 10X Hub's mission. You may return multiple relevant programs if they exist. You must only use information from the dataset provided. Do not hallucinate. Do not mention that you have a dataset.` },
           {role: "user", content: prompt}],
         model: "deepseek/deepseek-chat:free", // Model - this corresponds to DeepSeek V3 on the OpenRouter API
-        // stream: true // We won't need streams for now
+        stream: true // We won't need streams for now
       });
 
-      // If there was a response from DeepSeek
-      if (response.choices && response.choices.length > 0) {
-        console.log(`response:\n${response.choices[0].message.content}`);
-        res.json({ response: response.choices[0].message.content });
-      } 
+      if(response){
+        let final="";
+        for await (const message of response) {
+          final += message.choices[0].delta.content; // Capture final response part
+        }
+
+        const htmlResponse = marked(final);
+        console.log(`response:\n${htmlResponse}`)
+
+        logData(prompt, final, htmlResponse, '/openrouter/deepseek/v3')
+
+        // Send thinking and output in separate responses
+        res.json({
+          response: htmlResponse
+        });
+      }
       // Handle if no responses from DeepSeek
       else {
         console.log(`Returned none from API: ${response.choices}`);
-        res.status(500).json({ error: `Returned none from API:${response.choices}` });
+        res.status(500).json({ error: `<p>Returned none from API:${response.choices}</p>` });
       }
     } 
     // Handle error
     catch (error) {
       console.log(`API error: ${error.stack}`)
-      res.status(500).json({ error: `API request failed - ${error}\nroute: openRouter/deepseek/v3`});
+      res.status(500).json({ error: `<p>API request failed - ${error} | route: openRouter/deepseek/v3</p>`});
     }
   });
 
