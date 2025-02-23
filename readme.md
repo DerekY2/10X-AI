@@ -44,7 +44,7 @@ Preliminary failed DeekSeek API experiment for 10X Hub. Includes a interface and
 ### OpenAI Endpoint
 
 - **POST** `/openai/4o`
-    - Description: Handles requests to the OpenAI API.
+    - Handles requests to the OpenAI API.
     - Request Body:
         ```json
         {
@@ -61,7 +61,7 @@ Preliminary failed DeekSeek API experiment for 10X Hub. Includes a interface and
 ### DeepSeek Endpoint
 
 - **POST** `/deepseek/v3`
-    - Description: Handles requests to the DeepSeek API.
+    - Handles requests to the DeepSeek API.
     - Request Body:
         ```json
         {
@@ -78,7 +78,7 @@ Preliminary failed DeekSeek API experiment for 10X Hub. Includes a interface and
 ### OpenRouter Endpoint
 
 - **POST** `/openrouter/deepseek/v3`
-    - Description: Handles requests to the OpenRouter API.
+    - Handles requests to the OpenRouter API.
     - Request Body:
         ```json
         {
