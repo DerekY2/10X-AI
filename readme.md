@@ -6,7 +6,6 @@ This project is a web application that integrates with OpenAI's API to provide A
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Project Structure](#project-structure)
 - [API Endpoints](#api-endpoints)
 - [Environment Variables](#environment-variables)
 - [License](#license)
@@ -16,15 +15,15 @@ This project is a web application that integrates with OpenAI's API to provide A
 1. Clone the repository:
     ```sh
     git clone https://github.com/yourusername/deepseek-test-1.git
-    cd deepseek-test-1
     ```
 
 2. Install the dependencies:
     ```sh
+    cd backend
     npm install
     ```
 
-3. Create a `.env` file in the root directory and add your environment variables:
+3. Create a `.env` file in the `backend` directory and add API keys:
     ```env
     OPENAI_1=your_openai_api_key
     DEEPSEEK_1=your_deepseek_api_key
@@ -38,10 +37,7 @@ This project is a web application that integrates with OpenAI's API to provide A
     npm start
     ```
 
-2. Open your browser and navigate to `http://localhost:5000`.
-
-## Project Structure
-deepseek-test-1/ ├── backend/ │ ├── routes/ │ │ ├── openai.js │ │ ├── deepseek.js │ │ └── openRouter.js │ ├── users.json │ ├── info.js │ └── server.js ├── frontend/ │ ├── index.html │ ├── index.js │ └── styles/ │ └── style.css └── .env
+2. Open `index.html` in a browser (any method)
 
 ## API Endpoints
 
@@ -104,4 +100,4 @@ deepseek-test-1/ ├── backend/ │ ├── routes/ │ │ ├── open
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the GNU 3.0 License.
