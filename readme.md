@@ -1,6 +1,6 @@
 # DeepSeek Test 1
 
-This project is a web application that integrates with OpenAI's API to provide AI-powered responses. It includes a backend server built with Express.js and a frontend interface for user interaction.
+Preliminary failed DeekSeek API experiment for 10X Hub. Includes a interface and server.
 
 ## Table of Contents
 
