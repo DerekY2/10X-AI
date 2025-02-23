@@ -1,7 +1,7 @@
-FROM node:22
+FROM nginx:alpine
 
-WORKDIR /app
+WORKDIR /lander
 
-COPY . .
+COPY . /usr/share/nginx/html
 
 EXPOSE 5500
