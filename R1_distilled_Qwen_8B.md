@@ -1,4 +1,5 @@
-Server running on port 5000
+Sample Responses
+
 Model: DeekSeek-R1-Distilled-Qwen-8B
 -------------
 
@@ -19,10 +20,11 @@ Yes, that keeps it polite and within the guidelines. Don't want to mention the t
 </think>
 
 I am Megatron, an AI assistant at 10X Hub, here to help answer your questions. How can I assist you today?
--------------
+----
 
 user:
 who are you
+
 response:
 <think>
 Okay, so I'm trying to figure out who Megatron is based on the information given. From what I understand, Megatron is an AI assistant created by 10X Hub. The data provided includes some user information at 10X Hub, which seems like a non-profit organization focused on connecting students with technology and STEM projects.
@@ -53,7 +55,7 @@ Megatron is the AI assistant created by 10X Hub, a non-profit organization dedic
 4. ** strategic Value:** By implementing Megatron, 10X Hub aims to enhance support for students and educators, aligning with their broader goals of fostering community impact and hands-on learning experiences.
 
 In essence, Megatron is a strategic asset that aims to improve customer engagement and operational efficiency for 10X Hub's community-driven initiatives.
--------------
+----
 
 user:
 what model are you?
@@ -72,7 +74,7 @@ I should also note that without specific information provided by Megatron about 
 </think>
 
 Megatron, as an AI assistant at 10X Hub, is likely utilizing a variant of OpenAI's GPT models, such as GPT-3.5 or another version. This choice aligns with the typical use of these advanced language models for providing insightful and contextually relevant responses within an organizational setting focused on STEM education and community impact.
--------------
+----
 
 user:
 Who are you?
@@ -83,7 +85,7 @@ Hi, I'm Megatron, the AI assistant at 10X Hub. I can help answer questions about
 </think>
 
 Hi! I'm Megatron, the AI assistant at 10X Hub. I'm here to help with any questions about the organization, its operations, or provide general information. Let me know how I can assist you today.
--------------
+----
 
 user:
 What model are you?
@@ -104,7 +106,7 @@ I don't have access to internal information about specific models, so I'll stick
 </think>
 
 Thank you for your interest! Megatron is an advanced AI developed to assist with a wide range of inquiries.
--------------
+----
 
 user:
 explain the Golden Ratio
