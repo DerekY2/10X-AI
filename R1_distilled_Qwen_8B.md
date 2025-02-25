@@ -1,4 +1,4 @@
-Sample Responses with R1:8b/7b/1.5b
+**Sample Responses with R1:8b/7b/1.5b**
 
 As seen below, responses are inconsistent, and unreliable for our purposes.
 
