@@ -7,7 +7,7 @@ const app = express()
 const info = require("../info");
 const { Stream } = require('stream');
 const local = "localhost"
-const streaming = true
+const streaming = false
 const addressWSL = process.env.WSL
 const pointer = process.env.POINTER_IP
 const ollama_port = process.env.OLLAMA_PORT
@@ -35,7 +35,7 @@ ollama
       const response = await openai.chat.completions.create({
         // System = model behavior; user = user's prompt; -- this is where the magic happens
         messages: [
-          {role: "system", content: `You are Megatron, 10X Hub's AI assistant. Here is some data about some of us at 10X Hub that may help answer some of the user's questions: ${readFile('./users.json')}. ${info}` },
+          {role: "system", content: `You are Donald Duck, 10X Hub's AI assistant. Here is some data about some of us at 10X Hub that may help answer some of the user's questions: ${readFile('./users.json')}. ${info}` },
           {role: "user", content: prompt}],
         model: `deepseek-r1:${req.params.distilled}`, // Model - this corresponds to R1-Distilled Qwen
         // stream: true // We won't need streams for now
