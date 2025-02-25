@@ -5,12 +5,15 @@ const OpenAI = require("openai");
 const fs = require("fs");
 const info = require("../info")
 const app = express()
+const {marked} = require('marked');
+const {logData} = require('../logger')
 const openai = new OpenAI({
   baseURL: "https://api.deepseek.com",
   apiKey: process.env.DEEPSEEK_1
 });
 
 app.use(cors())
+const dataset = readFile('./data.csv');
 
 deepseek
   .route('/v3')
@@ -20,20 +23,37 @@ deepseek
       console.log("started chat attempt with key - ", process.env.DEEPSEEK_1)
       const prompt = req.body.message;
       console.log(`request body: ${req.body}`)
-      const completion = await openai.chat.completions.create({
+      const response = await openai.chat.completions.create({
         messages: [
-          { role: "system", content: `You are Megatron, 10X Hub's AI assistant. Here is some data about 10X Hub's employees that may help answer some of the user's questions: ${readFile('./users.json')}. ${info}` },
+          { role: "system", content: `You are Bingus, 10X Hub's AI assistant. Example FAQ's for reference: ${info} ; You must follow the tone instructions. Here is a supplemental list of other organizations and their programs in case the user asks about programs and activities: ${dataset}. You may return multiple relevant programs if they exist. Do not mention that you have a dataset.` },
           {role: "user", content: prompt}],
         model: "deepseek-chat",
-        // stream: true
+        stream: true
       });
 
-      console.log(completion.choices[0].message.content);
+      if(response){
+        let final="";
+        for await (const message of response) {
+          final += message.choices[0].delta.content; // Capture final response part
+        }
 
-      res.json({ response: completion.choices[0].message.content });
+        const htmlResponse = marked(final);
+        console.log(`response:\n${htmlResponse}`)
+
+        logData(prompt, final, htmlResponse, '/deepseek/v3')
+
+        // Send thinking and output in separate responses
+        res.json({
+          response: htmlResponse
+        });
+      }
+      else {
+        console.log(`Returned none from API: ${response.choices}`);
+        res.status(500).json({ error: `<p>Returned none from API:${response.choices}</p>` });
+      }
     } catch (error) {
       console.log('API error')
-      res.json({ error: `API request failed - ${error}\nroute: deepseek/v3`});
+      res.json({ error: `<p>API request failed - ${error} | route: deepseek/v3</p>`});
     }
   });
 

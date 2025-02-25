@@ -6,8 +6,9 @@ const fs = require("fs");
 const app = express()
 const info = require("../info");
 const { Stream } = require('stream');
+const {marked} = require('marked');
+const {logData} = require('../logger')
 const local = "localhost"
-const streaming = false
 const addressWSL = process.env.WSL
 const pointer = process.env.POINTER_IP
 const ollama_port = process.env.OLLAMA_PORT
@@ -19,8 +20,11 @@ const openai = new OpenAI({
   apiKey: 'ollama',
 });
 
+const streaming = true
+
 app.use(cors())
-console.log(`Connected to ${address}`)
+// console.log(`Connected to ${address}`)
+const dataset = readFile('./data.csv');
 
 ollama
   .route('/deepseek/r1/:distilled') // requested route is localhost:5000/ollama/deepseek/r1
@@ -35,39 +39,33 @@ ollama
       const response = await openai.chat.completions.create({
         // System = model behavior; user = user's prompt; -- this is where the magic happens
         messages: [
-          {role: "system", content: `You are Donald Duck, 10X Hub's AI assistant. Here is some data about some of us at 10X Hub that may help answer some of the user's questions: ${readFile('./users.json')}. ${info}` },
+          {role: "system", content: `You are Bingus, 10X Hub's AI assistant. Example FAQ's for reference: ${info} ; You must follow the tone instructions. Here is a supplemental list of other organizations and their programs in case the user asks about programs and activities: ${dataset}. You may return multiple relevant programs if they exist. Do not mention that you have a dataset.` },
           {role: "user", content: prompt}],
         model: `deepseek-r1:${req.params.distilled}`, // Model - this corresponds to R1-Distilled Qwen
         // stream: true // We won't need streams for now
-        stream: streaming
+        stream: true
       });
 
-      // If there was a response from DeepSeek
-      if (!streaming && response.choices && response.choices.length > 0) {
-        console.log(`response:\n${response.choices[0].message.content}`);
-        res.json({ response: response.choices[0].message.content });
-      } 
-      else if(streaming && response){
-        let think,final="";
+      if(response){
+        let final="";
         for await (const message of response) {
-          if (message.role === 'system' && message.response.includes('Thinking...')) {
-            think += message.response; // Capture thinking part
-          } else {
-            final += message.response; // Capture final response part
-          }
+          final += message.choices[0].delta.content; // Capture final response part
         }
-        console.log(`thoughts:\n${think}\nfinal:\n${final}`)
+
+        const htmlResponse = marked(final);
+        console.log(`response:\n${htmlResponse}`)
+
+        logData(prompt, final, htmlResponse, '/ollama/deepseek/r1/:distilled')
+
         // Send thinking and output in separate responses
         res.json({
-          thinking: think,
-          output: final
+          response: htmlResponse
         });
-  
       }
       // Handle if no responses from DeepSeek
       else {
         console.log(`Returned none from API: ${response.choices}`);
-        res.status(500).json({ error: `Returned none from API:${response.choices}` });
+        res.status(500).json({ error: `<p>Returned none from API:${response.choices}</p>` });
       }
     } 
     // Handle error
@@ -82,7 +80,7 @@ ollama
       } else {
           console.log('General error message:', error.message);
       }
-      res.status(500).json({ error: `API request failed - ${error.stack}\nroute: ollama/deepseek/r1` });
+      res.status(500).json({ error: `<p>API request failed - ${error} | route: ollama/deepseek/r1</p>` });
   }
   });
 

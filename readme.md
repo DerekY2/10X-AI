@@ -1,6 +1,6 @@
 # 10X-AI
 
-Part 1 = Experimental LLM chatbot integration for 10X Hub. Includes a interface and server.
+Experimental LLM chatbot integration for 10X Hub. Includes a interface and server.
 
 ## Table of Contents
 
@@ -28,14 +28,24 @@ Part 1 = Experimental LLM chatbot integration for 10X Hub. Includes a interface 
     DEEPSEEK_1=your_deepseek_api_key
     OPEN_ROUTER_1=your_openrouter_api_key
     PORT=5000
+    ```
+    Additional variables may be needed for running models via Ollama:
+    ```env
     ADDRESS=VPS_ADDRESS
-    WSL=WSL_ADDRESS
+    WSL=OPTIONAL_WSL_ADDRESS
     POINTER_IP=OPTIONAL_LOCALHOST_POINTER_PORT
     OLLAMA_PORT=11434
-    IMAGE_NAME=DOCKER_IMAGE_NAME
     ```
 
 ## Usage
+
+### Option 1 (using cloud endpoint):
+
+1. Open `index.html` in a browser (any method)
+   
+2. On the top right corner, toggle to AWS Cloud.
+
+### Option 2 (locally hosted):
 
 1. Start the backend server:
     ```sh

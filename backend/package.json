@@ -4,10 +4,11 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "fs": "^0.0.1-security",
+    "marked": "^15.0.7",
     "openai": "^4.85.3",
     "papaparse": "^5.5.2"
   },
-  "scripts":{
+  "scripts": {
     "start": "node server.js",
     "test": "node test.js"
   }
