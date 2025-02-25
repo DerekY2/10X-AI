@@ -1,4 +1,4 @@
-Sample Responses
+Sample Responses with R1:8b/7b/1.5b (we don't want this)
 
 Model: DeekSeek-R1-Distilled-Qwen-8B
 -------------
