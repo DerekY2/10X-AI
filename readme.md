@@ -1,13 +1,12 @@
-# DeepSeek Test 1
+# 10X-AI
 
-Preliminary failed DeekSeek API experiment for 10X Hub. Includes a interface and server.
+Part 1 = Experimental LLM chatbot integration for 10X Hub. Includes a interface and server.
 
 ## Table of Contents
 
 - [Installation](#installation)
 - [Usage](#usage)
 - [API Endpoints](#api-endpoints)
-- [Environment Variables](#environment-variables)
 - [License](#license)
 
 ## Installation
@@ -23,11 +22,17 @@ Preliminary failed DeekSeek API experiment for 10X Hub. Includes a interface and
     npm install
     ```
 
-3. Create a `.env` file in the `backend` directory and add API keys:
+3. Create a `.env` file in the `backend` directory and add API keys, server ports, VPS addresses, API endpoints as needed:
     ```env
     OPENAI_1=your_openai_api_key
     DEEPSEEK_1=your_deepseek_api_key
     OPEN_ROUTER_1=your_openrouter_api_key
+    PORT=5000
+    ADDRESS=VPS_ADDRESS
+    WSL=WSL_ADDRESS
+    POINTER_IP=OPTIONAL_LOCALHOST_POINTER_PORT
+    OLLAMA_PORT=11434
+    IMAGE_NAME=DOCKER_IMAGE_NAME
     ```
 
 ## Usage
@@ -41,62 +46,25 @@ Preliminary failed DeekSeek API experiment for 10X Hub. Includes a interface and
 
 ## API Endpoints
 
+### Ollama Endpoint
+
+- **POST** `/ollama/deepseek/r1`
+    - Handles requests to the  Ollama.
+
 ### OpenAI Endpoint
 
 - **POST** `/openai/4o`
     - Handles requests to the OpenAI API.
-    - Request Body:
-        ```json
-        {
-            "message": "Your message here"
-        }
-        ```
-    - Response:
-        ```json
-        {
-            "response": "AI response here"
-        }
-        ```
 
 ### DeepSeek Endpoint
 
 - **POST** `/deepseek/v3`
     - Handles requests to the DeepSeek API.
-    - Request Body:
-        ```json
-        {
-            "message": "Your message here"
-        }
-        ```
-    - Response:
-        ```json
-        {
-            "response": "AI response here"
-        }
-        ```
 
 ### OpenRouter Endpoint
 
 - **POST** `/openrouter/deepseek/v3`
     - Handles requests to the OpenRouter API.
-    - Request Body:
-        ```json
-        {
-            "message": "Your message here"
-        }
-        ```
-    - Response:
-        ```json
-        {
-            "response": "AI response here"
-        }
-        ```
-
-## Environment Variables
-
-- `OPENAI_1`: Your OpenAI API key.
-- `DEEPSEEK_1`: Your DeepSeek API key.
-- `OPEN_ROUTER_1`: Your OpenRouter API key.
 
 ## License
 

@@ -1,6 +1,7 @@
 const DEEPSEEK_V3 = "http://localhost:5000/deepseek/v3";
 const OPEN_ROUTER = "http://localhost:5000/openrouter/deepseek/v3";
-const SERVER = OPEN_ROUTER
+const OLLAMA_R1 = "http://localhost:5000/ollama/deepseek/r1/1.5b";
+const SERVER = OLLAMA_R1
 const messages = [];
 
 const chatWindow = document.querySelector('.chat-window')
@@ -88,6 +89,7 @@ async function sendMessage() {
     // if error
     catch (error) {
         chatContainer.innerHTML += `<div class="error"><p>ERROR: Connection failed.</p></div>`;
+        chatContainer.innerHTML += `<div class="error"><p>${error}</p></div>`;
     }
     // Remove loader
     document.querySelector('.chat-container .chat-typing').remove()
