@@ -12,6 +12,7 @@ Who are you?
 **response:**
 
 <think>
+
 <think
 
 Okay, so I received a question asking, "Who are you?" The user also mentioned that they're providing some data about individuals at 10X Hub. Hmm, I need to figure out how to respond appropriately as Megatron.
