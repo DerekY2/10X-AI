@@ -22,7 +22,7 @@ Experimental LLM chatbot integration for 10X Hub. Includes a interface and serve
     npm install
     ```
 
-3. Create a `.env` file in the `backend` directory and add API keys, server ports, VPS addresses, API endpoints as needed:
+3. Create a `.env` file in the `backend` directory and add API keys, server ports etc. as needed:
     ```env
     OPENAI_1=your_openai_api_key
     DEEPSEEK_1=your_deepseek_api_key
