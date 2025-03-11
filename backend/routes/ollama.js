@@ -35,7 +35,7 @@ ollama
       const response = await openai.chat.completions.create({
         // System = model behavior; user = user's prompt; -- this is where the magic happens
         messages: [
-          {role: "system", content: `You are Donald Duck, 10X Hub's AI assistant. Here is some data about some of us at 10X Hub that may help answer some of the user's questions: ${readFile('./users.json')}. ${info}` },
+          {role: "system", content: `You are Blawgg, 10X Hub's AI assistant. Here is some data about some of us at 10X Hub that may help answer some of the user's questions: ${readFile('./users.json')}. ${info}` },
           {role: "user", content: prompt}],
         model: `deepseek-r1:${req.params.distilled}`, // Model - this corresponds to R1-Distilled Qwen
         // stream: true // We won't need streams for now
