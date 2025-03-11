@@ -10,6 +10,8 @@ const openai = new OpenAI({
   apiKey: process.env.OPEN_ROUTER_1        // Private API key from .env
 });
 
+const streaming = false;
+
 app.use(cors())
 
 openrouter
@@ -18,6 +20,9 @@ openrouter
 
     // Set request message as prompt
     const prompt = req.body.message;
+    const dataset = readFile('./data.csv');
+
+    console.log(`user:\n${prompt}`)
 
     try {
 
@@ -26,17 +31,29 @@ openrouter
 
         // System = model behavior; user = user's prompt; -- this is where the magic happens
         messages: [
-          {role: "system", content: `You are Blawgg, 10X Hub's AI assistant. Here is some data about some of us at 10X Hub that may help answer some of the user's questions: ${readFile('./users.json')}. ${info}` },
+          {role: "system", content: `You are Blawgg, 10X Hub's AI assistant. Here is some data about some of us at 10X Hub that may help answer some of the user's questions: ${dataset}. ${info}` },
           {role: "user", content: prompt}],
         model: "deepseek/deepseek-chat:free", // Model - this corresponds to DeepSeek V3 on the OpenRouter API
-        // stream: true // We won't need streams for now
+        stream: streaming // We won't need streams for now
       });
 
       // If there was a response from DeepSeek
-      if (response.choices && response.choices.length > 0) {
+      if (!streaming && response.choices && response.choices.length > 0) {
         console.log(`response:\n${response.choices[0].message.content}`);
         res.json({ response: response.choices[0].message.content });
       } 
+      else if(streaming && response){
+        let final="";
+        for await (const message of response) {
+            final += message.response; // Capture final response part
+        }
+        console.log(`response:\n${final}`)
+        // Send thinking and output in separate responses
+        res.json({
+          output: final
+        });
+  
+      }
       // Handle if no responses from DeepSeek
       else {
         console.log(`Returned none from API: ${response.choices}`);
