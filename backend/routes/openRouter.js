@@ -31,7 +31,7 @@ openrouter
 
         // System = model behavior; user = user's prompt; -- this is where the magic happens
         messages: [
-          {role: "system", content: `You are Blawgg, 10X Hub's AI assistant. Here is some data about some of us at 10X Hub that may help answer some of the user's questions: ${dataset}. ${info}` },
+          {role: "system", content: `You are Blawgg, 10X Hub's AI assistant. Here is some data about some of us at 10X Hub that may help answer some of the user's questions: ${dataset}. Example FAQ's for reference: ${info} ; You must folow the tone instructions.` },
           {role: "user", content: prompt}],
         model: "deepseek/deepseek-chat:free", // Model - this corresponds to DeepSeek V3 on the OpenRouter API
         stream: streaming // We won't need streams for now
