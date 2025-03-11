@@ -21,7 +21,7 @@ GPT
       console.log(`request body: ${req.body}`)
       const completion = await openai.chat.completions.create({
         messages: [
-          { role: "system", content: `You are Megatron, 10X Hub's AI assistant. Here is some data about 10X Hub's employees that may help answer some of the user's questions: ${readFile('./users.json')}. ${info}` },
+          { role: "system", content: `You are Blawgg, 10X Hub's AI assistant. Here is some data about 10X Hub's employees that may help answer some of the user's questions: ${readFile('./users.json')}. ${info}` },
           {role: "user", content: prompt}],
         model: "chatgpt-4o-latest",
         // stream: true

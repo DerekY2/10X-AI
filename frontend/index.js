@@ -1,7 +1,7 @@
 const DEEPSEEK_V3 = "http://localhost:5000/deepseek/v3";
 const OPEN_ROUTER = "http://localhost:5000/openrouter/deepseek/v3";
 const OLLAMA_R1 = "http://localhost:5000/ollama/deepseek/r1/7b";
-const SERVER = OLLAMA_R1
+const SERVER = OPEN_ROUTER;
 const messages = [];
 
 const chatWindow = document.querySelector('.chat-window')
