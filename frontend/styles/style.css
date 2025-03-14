@@ -189,6 +189,18 @@ body {
   font-size: large;
 }
 
+.chat-icon{
+  transition: all 0.2s ease;
+}
+
+.chat-icon:hover{
+  transform: scale(1.1);
+}
+
+.chat-icon:active{
+   transform: scale(1.2);
+}
+
 .send-btn:disabled{
   color: rgb(114, 114, 114);
   background-color: rgb(197, 197, 197);
