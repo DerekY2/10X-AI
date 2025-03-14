@@ -82,7 +82,7 @@ ollama
       } else {
           console.log('General error message:', error.message);
       }
-      res.status(500).json({ error: `API request failed - ${error} | \nroute: ollama/deepseek/r1` });
+      res.status(500).json({ error: `API request failed - ${error} | route: ollama/deepseek/r1` });
   }
   });
 

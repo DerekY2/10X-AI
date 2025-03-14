@@ -18,7 +18,7 @@ GPT
   .post(async (req, res) => {
     console.log('post received; route: openai/4o')
     try {
-      console.log("started chat attempt with key - ", process.env.OPENAI_1)
+      // console.log("started chat attempt with key - ", process.env.OPENAI_1)
       const prompt = req.body.message;
       console.log(`request body: ${req.body}`)
       const completion = await openai.chat.completions.create({
@@ -54,7 +54,7 @@ GPT
     } 
     catch (error) {
       console.log('API error')
-      res.json({ error: `API request failed - ${error} | \nroute: openai/4o`});
+      res.json({ error: `API request failed - ${error} | route: openai/4o`});
     }
   });
 

@@ -63,7 +63,7 @@ openrouter
     // Handle error
     catch (error) {
       console.log(`API error: ${error.stack}`)
-      res.status(500).json({ error: `API request failed - ${error}\nroute: openRouter/deepseek/v3`});
+      res.status(500).json({ error: `API request failed - ${error} | route: openRouter/deepseek/v3`});
     }
   });
 
