@@ -1,31 +1,53 @@
-// const DEEPSEEK_V3 = "http://localhost:5000/deepseek/v3";
-// const OLLAMA_R1 = "http://localhost:5000/ollama/deepseek/r1/7b";
+const DEEPSEEK_V3 = "http://localhost:5000/deepseek/v3";
+const OLLAMA_R1 = "http://localhost:5000/ollama/deepseek/r1/7b";
+const OPENAI_4O = "http://localhost:5000/openai/4o";
 const OPEN_ROUTER = "http://localhost:5000/openrouter/deepseek/v3";
-const SERVER = OPEN_ROUTER;
+var SERVER = OPEN_ROUTER;
 const messages = [];
 
 const chatWindow = document.querySelector('.chat-window')
 const sendBtn = document.querySelector('.send-btn')
 const chatContainer = document.querySelector(".chat-container");
+const chatBtn = document.querySelector(".chat-btn");
+const closeBtn = document.querySelector(".close-btn");
+const inputBox= document.querySelector(".user-input");
+const chatTitle= document.querySelector(".chat-title")
+const chatIcon=document.querySelector(".chat-icon");
 
 // on submit, run sendMessage()
-document.querySelector(".send-btn").addEventListener("click", ()=>{
+sendBtn.addEventListener("click", ()=>{
     console.log('sending message');
     sendMessage();
 });
 
 // on Enter, run sendMessage()
-document.querySelector(".user-input").addEventListener("keydown", function(e) {
+inputBox.addEventListener("keydown", function(e) {
     if (e.keyCode == 13 && !e.shiftKey && sendBtn.disabled==false) {
         e.preventDefault();
         sendMessage();
     }
 });
 
-document.querySelector(".chat-btn").addEventListener("click",()=>{
+chatIcon.addEventListener("click",()=>{
+    if(SERVER==OPEN_ROUTER){
+        SERVER=OLLAMA_R1
+    }
+    else if(SERVER==OLLAMA_R1){
+        SERVER=OPENAI_4O
+    }
+    else if(SERVER==OPENAI_4O){
+        SERVER=DEEPSEEK_V3
+    }
+    else{
+        SERVER=OPEN_ROUTER
+    }
+    updateChatTitle()
+})
+
+chatBtn.addEventListener("click",()=>{
     chatWindow.classList.remove('hidden');
 })
-document.querySelector(".close-btn").addEventListener('click',()=>{
+closeBtn.addEventListener('click',()=>{
     chatWindow.classList.add('hidden')
 })
 
@@ -114,3 +136,24 @@ function disable(toggle){
         document.querySelector('.send-btn i').classList.add('bxs-send')
     }
 }
+
+function updateChatTitle(){
+    if (SERVER == OPEN_ROUTER) {
+        chatTitle.textContent = "OpenRouter: DeepSeek V3";
+    } else if (SERVER == DEEPSEEK_V3) {
+        chatTitle.textContent = "DeepSeek V3";
+    } else if (SERVER == OLLAMA_R1) {
+        chatTitle.textContent = "Ollama: DeepSeek R1:7B";
+    } else if(SERVER == OPENAI_4O){
+        chatTitle.textContent = "OpenAI: GPT-4o";
+    }
+    else{
+        chatTitle.textContent = "Unknown";
+    }
+}
+
+function init(){
+    updateChatTitle
+}
+
+init
