@@ -7,7 +7,6 @@ const app = express()
 const info = require("../info");
 const { Stream } = require('stream');
 const local = "localhost"
-const streaming = false
 const addressWSL = process.env.WSL
 const pointer = process.env.POINTER_IP
 const ollama_port = process.env.OLLAMA_PORT
@@ -18,6 +17,8 @@ const openai = new OpenAI({
   // required but ignored
   apiKey: 'ollama',
 });
+
+const streaming = false
 
 app.use(cors())
 // console.log(`Connected to ${address}`)
