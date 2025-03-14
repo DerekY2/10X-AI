@@ -1,6 +1,7 @@
 # 10X-AI
 
 Part 1 = Experimental LLM chatbot integration for 10X Hub. Includes a interface and server.
+Openrouter testing branch.
 
 ## Table of Contents
 
