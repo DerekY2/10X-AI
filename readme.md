@@ -1,6 +1,6 @@
 # 10X-AI
 
-Part 1 = Experimental LLM chatbot integration for 10X Hub. Includes a interface and server.
+Experimental LLM chatbot integration for 10X Hub. Includes a interface and server.
 
 ## Table of Contents
 
