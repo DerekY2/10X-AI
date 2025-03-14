@@ -40,13 +40,12 @@ GPT
             final += message.response; // Capture final response part
         }
         console.log(`response:\n${final}`)
-        // Send thinking and output in separate responses
         res.json({
           output: final
         });
   
       }
-      // Handle if no responses from DeepSeek
+      // Handle if no responses from GPT
       else {
         console.log(`Returned none from API: ${response.choices}`);
         res.status(500).json({ error: `Returned none from API:${response.choices}` });

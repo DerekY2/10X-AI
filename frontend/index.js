@@ -155,5 +155,4 @@ function updateChatTitle(){
 function init(){
     updateChatTitle
 }
-
-init
+init()
