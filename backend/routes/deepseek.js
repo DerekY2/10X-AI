@@ -33,7 +33,7 @@ deepseek
       res.json({ response: completion.choices[0].message.content });
     } catch (error) {
       console.log('API error')
-      res.json({ error: `API request failed - ${error} | \nroute: deepseek/v3`});
+      res.json({ error: `API request failed - ${error} | route: deepseek/v3`});
     }
   });
 

@@ -54,7 +54,7 @@ GPT
     } 
     catch (error) {
       console.log('API error')
-      res.json({ error: `API request failed - ${error} | \nroute: openai/4o`});
+      res.json({ error: `API request failed - ${error} | route: openai/4o`});
     }
   });
 
