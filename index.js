@@ -1,4 +1,4 @@
-var host = `localhost:5000` //AWS Cloud: 3.96.133.132:8000 // local: localhost:5000
+var host = `3.96.133.132:8000` //AWS Cloud: 3.96.133.132:8000 // local: localhost:5000
 var DEEPSEEK_V3, OLLAMA_R1, OPENAI_4O, OPEN_ROUTER, SERVER;
 
 const messages = [];
